@@ -1,0 +1,27 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MI WEB| {% block titulo %}{% endblock titulo %}</title>
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+</head>
+
+
+<body class="contenedor">
+
+	<div class="centrar">
+		<img src="{% static 'img/logo.png' %}" width="500px" height="500px">
+		<a href="{% url 'home' %}">IR AL HOME</a>
+		<a href="{% url 'nosotros' %}">IR A NOSOTROS</a>
+		<a href="{% url 'noticias:listar' %}">IR A NOTICIAS</a>
+	</div>
+
+	<div class="bloque">
+	{% block contenido %}
+
+	{% endblock contenido %}
+	</div>
+</body>
+</html>
