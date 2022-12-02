@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 from django.urls import path, include
+from django.contrib.auth import views as auth
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +28,10 @@ urlpatterns = [
     path('Nosotros/', views.Nosotros, name='nosotros'),
 
     path('Noticias/', include('apps.noticias.urls')),
+    path('Usuario/',include('apps.usuarios.urls')),
+
+
+    path('login/', auth.LoginView.as_view(template_name='usuarios/login.html'), name='login'),
+    path('logout/', auth.LogoutView.as_view(), name="logout"),
+
 ]
