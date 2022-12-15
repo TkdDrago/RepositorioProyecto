@@ -1,5 +1,5 @@
 .contenedor{
-	background-color: lightgrey;
+	background-color: grey;
 }
 
 .centrar{
@@ -9,4 +9,8 @@
 .bloque{
 	text-align: center;
 	padding: 100px;
+}
+
+.submenu{
+	font-size: 18px	;
 }
