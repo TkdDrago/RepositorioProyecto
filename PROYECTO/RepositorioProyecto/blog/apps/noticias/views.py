@@ -22,6 +22,7 @@ def Listar_Noticias(request):
 	cat = Categoria.objects.all().order_by('nombre')
 	contexto['categorias'] = cat
 
+
 	return render(request, 'noticias/listar.html', contexto)
 
 @login_required
@@ -35,6 +36,7 @@ def Detalle_Noticias(request, pk):
 	contexto['comentarios'] = c
 
 	return render(request, 'noticias/detalle.html',contexto)
+
 
 
 @login_required

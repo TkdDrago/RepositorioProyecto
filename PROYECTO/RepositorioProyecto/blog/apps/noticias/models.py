@@ -18,6 +18,8 @@ class Noticia(models.Model):
 	def __str__(self):
 		return self.titulo
 
+texto = models.TextField()
+
 class Comentario(models.Model):
 	usuario = models.ForeignKey(Usuario, on_delete = models.CASCADE)
 	texto = models.TextField(max_length = 400)
@@ -25,4 +27,4 @@ class Comentario(models.Model):
 	fecha = models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):
-		return f"{noticia}->{texto}"
+		return f"{Noticia}->{texto}"
