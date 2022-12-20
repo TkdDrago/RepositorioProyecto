@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}NOTICIAS{% endblock titulo %}
+
+{% block contenido %}
+
+<!-- Featured News Slider Start -->
+<div class="container-fluid pt-5 mb-3">
+    <div class="container">
+        <div class="section-title">
+            {% if pk == 0 %}
+            <h4 class="m-0 text-uppercase font-weight-bold">TODAS LAS NOTICIAS</h4>
+            {% else %}
+            <h4 class="m-0 text-uppercase font-weight-bold">CATEGORÍA {{categoria_noticia}}</h4>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!-- Featured News Slider End -->
+
+
+<!-- News With Sidebar Start -->
+<div class="container-fluid">
+    <div class="container">
+        <div style="flex-direction:column;align-items:center" class="row">
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-12">
+                    </div>
+                    <!-- 4 noticias random -->
+                    {% for noti in noticias %}
+                    <div class="col-lg-6">
+                        <div class="position-relative mb-3">
+                            <div class="container-img-random">
+                                <img class="resize-img img-fluid w-100 img-changes" src=" {{noti.imagen.url}}">
+                            </div>
+                            <div class="bg-white border border-top-0 p-4">
+                                <div class="mb-2">
+                                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
+                                        href="{% url 'noticias:todas' 1 noti.categoria_noticia.pk %}">{{noti.categoria_noticia}}</a>
+                                    <p class="text-body"><small>{{noti.fecha}}</small></p>
+                                </div>
+                                <a class="title-length h4 d-block mb-3 text-secondary text-uppercase font-weight-bold"
+                                    href="{% url 'noticias:detalle' noti.pk %}">{{noti.titulo}}</a>
+                                <p class="m-0 text-length">{{noti.cuerpo}}</p>
+                            </div>
+                            <div class="d-flex justify-content-between bg-white border border-top-0 p-4">
+                                <div class="d-flex align-items-center">
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <small class="ml-3"><i class="far fa-eye mr-2"></i>{{noti.views_total}}</small>
+                                    <small class="ml-3"><i class="far fa-comment mr-2"></i>{{noti.comentarios}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div style="width:100%; justify-content: center; display: flex; align-items: center;gap: 4px; height: 25px;"
+                        class="form-group mb-0">
+                        {% if pagination_number <= 1 %} {% else %} <a
+                            href="{% url 'noticias:todas' pagination_number|add:'-1' pk %}"
+                            style="width: 25px; height: 25px; margin: 0; padding: 0 !important;"
+                            class="btn btn-primary font-weight-semi-bold py-2 px-3">&laquo;</a>
+                            {% endif %}
+                            <div>
+                                {% for i in range %}
+
+                                {% if pagination_number == i|add:"1" %}
+                                <a style="background-color: #6c6c6c;" href="{% url 'noticias:todas' i|add:'1' pk %}"
+                                    class="pagination-number">{{i|add:"1"}}</a>
+                                {% else %}
+                                <a href="{% url 'noticias:todas' i|add:'1' pk %}"
+                                    class="pagination-number">{{i|add:"1"}}</a>
+                                {% endif %}
+
+                                {% endfor %}
+                            </div>
+                            {% if pagination_number >= pagination_pages %}
+                            {% else %}
+                            <a href="{% url 'noticias:todas' pagination_number|add:'+1' pk %}"
+                                style="width: 25px; height: 25px; margin: 0; padding: 0 !important;"
+                                class="btn btn-primary font-weight-semi-bold py-2 px-3">&raquo;</a>
+                            {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}

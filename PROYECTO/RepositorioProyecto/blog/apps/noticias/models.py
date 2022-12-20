@@ -1,28 +1,35 @@
 from django.db import models
 from apps.usuarios.models import Usuario
 
-class Categoria(models.Model):
-	nombre = models.CharField(max_length = 60)
 
-	def __str__(self):
-		return self.nombre
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.nombre
+
 
 class Noticia(models.Model):
 
-	titulo = models.CharField(max_length = 150)
-	cuerpo = models.TextField()
-	imagen = models.ImageField(upload_to = 'noticias')
-	categoria_noticia = models.ForeignKey(Categoria, on_delete = models.CASCADE)
-	fecha = models.DateTimeField(auto_now_add=True)
+    titulo = models.CharField(max_length=150)
+    cuerpo = models.TextField()
+    imagen = models.ImageField(upload_to='noticias')
+    categoria_noticia = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
+    views_week = models.IntegerField(default=0, editable=False)
+    views_total = models.IntegerField(default=0, editable=False)
+    comentarios = models.IntegerField(default=0, editable=False)
 
-	def __str__(self):
-		return self.titulo
+
+def __str__(self):
+    return self.titulo
+
 
 class Comentario(models.Model):
-	usuario = models.ForeignKey(Usuario, on_delete = models.CASCADE)
-	texto = models.TextField(max_length = 400)
-	noticia = models.ForeignKey(Noticia, on_delete = models.CASCADE)
-	fecha = models.DateTimeField(auto_now_add=True)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    texto = models.TextField(max_length=400)
+    noticia = models.ForeignKey(Noticia, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
 
-	def __str__(self):
-		return f"{noticia}->{texto}"
+    def __str__(self):
+        return f"{self.noticia}->{self.texto}"

@@ -1,48 +1,163 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html>
-<head>
-	<title>MI WEB| {% block titulo %}{% endblock titulo %}</title>
 
+<head>
+	<meta charset="utf-8">
+	<title>NoticiasFlecha - {% block titulo %}{% endblock titulo %}</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta content="Free HTML Templates" name="keywords">
+	<meta content="Free HTML Templates" name="description">
+
+	<!-- Favicon -->
+	<link href="img/favicon.ico" rel="icon">
+
+	<!-- Google Web Fonts -->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+	<!-- Font Awesome -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+
+	<!-- Libraries Stylesheet -->
+	<link href={% static 'lib/owlcarousel/assets/owl.carousel.min.css' %} rel="stylesheet">
+	<!-- Customized Bootstrap Stylesheet -->
+	<link href={% static 'css/main.css' %} rel="stylesheet">
 </head>
 
 
-<body class="contenedor">
-	
-        <div class="centrar">
-                <img src={% static 'img/flecha1.png' %}>
-                    <a href="{% url 'home' %}">HOME</a>
-        			<a href="{% url 'nosotros' %}">NOSOTROS</a>
-                    <a href="{% url 'noticias:listar' %}">NOTICIAS</a>
-
-				{%if user.is_authenticated%}
-					<strong>Hola {{ user.username }}  </strong>
-					<a class="Login" href="{% url 'logout' %}">LOGOUT</a>
-			
-				{% else %}
-
-					<a href="{% url 'login' %}">LOGIN</a>
-					<a href="{% url 'usuarios:registro' %}">Registrar</a>
-			
-				{% endif %}
-
-				{%if user.is_superuser or user.is_staff %}
-			
-  					<a class="Login" href="/admin">Admin</a
-				
-				{% endif %}
-               
-
-            
-        </div>
-	</body>
+<body>
+	<!-- Logo Start -->
+	<div class="col-lg-4">
+		<a href="{% url 'home' %}" class="navbar-brand p-0 d-none d-lg-block">
+			<h1 class="logo m-0 display-4 text-uppercase text-primary">Asociación civil<span
+					class="text-secondary font-weight-normal"> Juntos en acción</span></h1>
+		</a>
 	</div>
+	<!-- Logo End -->
 
-	<div class="bloque">
+
+	<!-- Navbar Start -->
+	<div class="container-fluid p-0">
+		<nav class="navbar navbar-expand-lg bg-dark navbar-dark py-2 py-lg-0 px-lg-5">
+			<a href="{% url 'home' %}" class="navbar-brand d-block d-lg-none">
+				<h1 class="logo-mobile m-0 display-4 text-uppercase text-primary">Asociación civil</h1>
+				<h1 class="logo-mobile text-white font-weight-normal text-uppercase text-primar">juntos en acción</h1>
+			</a>
+			<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse justify-content-between px-0 px-lg-3" id="navbarCollapse">
+				<div class="navbar-nav mr-auto py-0">
+					<a name="/" href="{% url 'home' %}" class="nav-item nav-link">Noticias</a>
+					<div class="nav-item dropdown">
+						<a name="Categorias" href="#" class="nav-link dropdown-toggle"
+							data-toggle="dropdown">Categorías</a>
+						<div class="dropdown-menu rounded-0 m-0">
+							{% for cat in categorias %}
+							<a href="{% url 'noticias:todas' 1 cat.pk %}" class="dropdown-item">{{cat.nombre}}</a>
+							{% endfor %}
+						</div>
+					</div>
+					<a name="Nosotros" href="{% url 'nosotros' %}" class="nav-item nav-link">Nosotros</a>
+				</div>
+				<div class="navbar-nav mr-auto py-0 background-login">
+					{%if user.is_authenticated%}
+					<p class="nav-item container-access"><span class="connected">{{user.username}}</span>
+						<a name="registro" href="{% url 'logout' %}" class=" logout nav-link">
+							Cerrar
+							sesión
+							</span></a>
+						{% else %}
+						<a name="login" href="{% url 'login' %}" class="nav-item nav-link">Ingresar</a>
+						<a name="registro" href="{% url 'usuarios:registro' %}"
+							class="nav-item nav-link">Registrarse</a>
+						{% endif %}
+
+						{%if user.is_superuser or user.is_staff %}
+						<a class="Login nav-link-2" href="/admin">Admin</a>
+						{% endif %}
+				</div>
+			</div>
+	</div>
+	</nav>
+	</div>
+	<!-- Navbar End -->
 	{% block contenido %}
-
 	{% endblock contenido %}
+	<!-- Footer Start -->
+	<div class="container-fluid bg-dark pt-5 px-sm-3 px-md-5 mt-5">
+		<div style="width: 100%; justify-content: center;" class="row py-4">
+			<div class="col-lg-3 col-md-6 mb-5">
+				<h5 class="mb-4 text-white text-uppercase font-weight-bold">Contacto</h5>
+				<p class="font-weight-medium"><i class="fa fa-map-marker-alt mr-2"></i>DORREGO 490, Presidencia Roque
+					Sáenz Peña, Chaco.</p>
+				<p class="font-weight-medium"><i class="fa fa-phone-alt mr-2"></i>3644733177</p>
+				<p class="font-weight-medium"><i class="fa fa-envelope mr-2"></i>uep143.sp.chaco@gmail.com</p>
+				<h6 class="mt-4 mb-3 text-white text-uppercase font-weight-bold">Redes sociales</h6>
+				<div class="d-flex justify-content-start">
+					<a class="btn btn-lg btn-secondary btn-lg-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
+					<a class="btn btn-lg btn-secondary btn-lg-square mr-2" href="#"><i
+							class="fab fa-facebook-f"></i></a>
+					<a class="btn btn-lg btn-secondary btn-lg-square mr-2" href="#"><i
+							class="fab fa-linkedin-in"></i></a>
+					<a class="btn btn-lg btn-secondary btn-lg-square mr-2" href="#"><i class="fab fa-instagram"></i></a>
+					<a class="btn btn-lg btn-secondary btn-lg-square" href="#"><i class="fab fa-youtube"></i></a>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 mb-5">
+				<h5 class="mb-4 text-white text-uppercase font-weight-bold">Categorías</h5>
+				<div class="m-n1">
+					{% for cat in categorias %}
+					<a href="{% url 'noticias:todas' 1 cat.pk %}"
+						class="btn btn-sm btn-secondary m-1">{{cat.nombre}}</a>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 mb-5">
+				<h5 class="mb-4 text-white text-uppercase font-weight-bold">Flickr Photos</h5>
+				<div class="row">
+					<div class="col-4 mb-3">
+						<a href=""><img class="w-100" src={% static 'img/news-110x110-1.jpg' %} alt=""></a>
+					</div>
+					<div class="col-4 mb-3">
+						<a href=""><img class="w-100" src={% static 'img/news-110x110-2.jpg' %} alt=""></a>
+					</div>
+					<div class="col-4 mb-3">
+						<a href=""><img class="w-100" src={% static 'img/news-110x110-3.jpg' %} alt=""></a>
+					</div>
+					<div class="col-4 mb-3">
+						<a href=""><img class="w-100" src={% static 'img/news-110x110-4.jpg' %} alt=""></a>
+					</div>
+					<div class="col-4 mb-3">
+						<a href=""><img class="w-100" src={% static 'img/news-110x110-5.jpg' %} alt=""></a>
+					</div>
+					<div class="col-4 mb-3">
+						<a href=""><img class="w-100" src={% static 'img/news-110x110-1.jpg' %} alt=""></a>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+	<div class="container-fluid py-4 px-sm-3 px-md-5" style="background: #111111;">
+		<p class="m-0 text-center">&copy; <a href="#">Juntos En Acción</a>. All Rights Reserved.
+		</p>
+	</div>
+	<!-- Footer End -->
+
+
+	<!-- Back to Top -->
+	<a href="#" class="btn btn-primary btn-square back-to-top"><i class="fa fa-arrow-up"></i></a>
+
+
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src={% static 'lib/easing/easing.min.js' %}></script>
+	<script src={% static 'lib/owlcarousel/owl.carousel.min.js' %}></script>
+	<!-- JavaScript template -->
+	<script src={% static 'js/main.js' %}></script>
+	<script src={% static 'js/navbar.js' %}></script>
 </body>
+
 </html>

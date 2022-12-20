@@ -3,32 +3,108 @@
 
 {% block titulo %}NOTICIAS{% endblock titulo %}
 
-
 {% block contenido %}
-	<h1>ACA VOY A DETALLAR UNA NOTICIA</h1>
-		<img src="{{noticia.imagen.url}}" width="500" height="500">
-		
-		<p>TITULO: {{noticia.titulo}}</p>
-		
-		<p>FECHA: {{noticia.fecha}}</p>
-		<p>CATEGORIA: {{noticia.categoria_noticia}}</p>
-		<p>CUERPO: {{noticia.cuerpo}}</p>
-		<br><br>
-		<br>
-		<form method="POST" action="{% url 'noticias:comentar' %}">{% csrf_token %}
-			<textarea name="comentario" maxlength="400"> </textarea>
-			<input type="text" name="id_noticia" value="{{noticia.pk}}" hidden=""> 
-			<input type="submit" value="GUARDAR">
-		</form>
-		<br><br><br>
-		<h3>COMENTARIOS</h3>
-		{% for com in comentarios %}
-		{% if user == com.usuario %}
-			<a href="">borrar</a>
-		{% endif %}
-		<strong>FECHA:{{com.fecha}}</strong><br>
-		<strong>USUARIO:{{com.usuario}}</strong><br>
-		<p>{{com.texto}}</p>
-		{% endfor %}
-		<a href="{% url 'noticias:listar' %}">VOLVER</a>
+<!-- Breaking News Start -->
+<div class="container-fluid mt-5 mb-3 pt-3">
+	<div class="container">
+		<div class="row align-items-center">
+			<div class="col-12">
+				<div class="d-flex justify-content-between">
+					<div class="section-title border-right-0 mb-0" style="width: 120px;">
+						<h4 style="font-size:1rem" class="m-0 text-uppercase font-weight-bold">últimas</h4>
+					</div>
+					<div class="owl-carousel tranding-carousel position-relative d-inline-flex align-items-center bg-white border border-left-0"
+						style="width: calc(100% - 120px); padding-right: 100px;">
+						{% for noti in noticias %}
+						<div class="text-truncate"><a class="text-secondary text-uppercase font-weight-semi-bold"
+								href="{% url 'noticias:detalle' noti.pk %}">{{noti.titulo}}</a></div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Breaking News End -->
+
+
+<!-- News With Sidebar Start -->
+<div class="container-fluid">
+	<div class="container">
+		<div style="flex-direction: column;align-items: center;" class="row">
+			<div class="col-lg-8">
+				<!-- News Detail Start -->
+				<div class="position-relative mb-3">
+					<img class="img-fluid w-100" src="{{noticia.imagen.url}}" style="object-fit: cover;">
+					<div class="bg-white border border-top-0 p-4">
+						<div class="mb-3">
+							<a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
+								href="{% url 'noticias:todas' 1 noticia.categoria_noticia.pk %}">{{noticia.categoria_noticia}}</a>
+							<p class="text-body">{{noticia.fecha}}</p>
+						</div>
+						<h1 class="mb-3 text-secondary text-uppercase font-weight-bold">{{noticia.titulo}}</h1>
+						<p>{{noticia.cuerpo}}</p>
+					</div>
+					<div class="d-flex justify-content-between bg-white border border-top-0 p-4">
+						<div class="d-flex align-items-center">
+						</div>
+						<div class="d-flex align-items-center">
+							<span class="ml-3"><i class="far fa-eye mr-2"></i>{{noticia.views_total}}</span>
+							<span class="ml-3"><i class="far fa-comment mr-2"></i>{{comentarios|length}}</span>
+						</div>
+					</div>
+				</div>
+				<!-- News Detail End -->
+
+
+				<!-- Comment Form Start -->
+				<div class="mb-3">
+					<div class="section-title mb-0">
+						<h4 class="m-0 text-uppercase font-weight-bold">Deja un comentario</h4>
+					</div>
+					<div class="bg-white border border-top-0 p-4">
+						<form method="POST" action="{% url 'noticias:comentar' %}">
+							{% csrf_token %}
+							<div class="form-group">
+								<label for="message">Mensaje</label>
+								<textarea name="comentario" maxlength="400" id="message" cols="30" rows="5"
+									class="form-control"></textarea>
+							</div>
+							<input type="text" name="id_noticia" value="{{noticia.pk}}" hidden="">
+							<div class="form-group mb-0">
+								<input type="submit" value="Públicar comentario"
+									class="btn btn-primary font-weight-semi-bold py-2 px-3">
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- Comment Form End -->
+
+				<!-- Comment List Start -->
+				<div class="mb-3">
+					<div class="section-title mb-0">
+						<h4 class="m-0 text-uppercase font-weight-bold">{{ comentarios|length }} Comentarios</h4>
+					</div>
+					<div class="bg-white border border-top-0 p-4">
+						{% for com in comentarios %}
+						<div class="media mb-4 column">
+							{% if user == com.usuario %}
+							<a href="">Eliminar comentario</a>
+							{% endif %}
+							<div class="media-body">
+								<h6><a class="text-secondary font-weight-bold" href="">J{{com.usuario}}</a>
+									<small><i>{{com.fecha}}</i></small>
+								</h6>
+								<p>{{com.texto}}</p>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+				<!-- Comment List End -->
+			</div>
+		</div>
+	</div>
+</div>
+<!-- News With Sidebar End -->
 {% endblock contenido %}

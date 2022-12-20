@@ -1,17 +1,66 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Registro{% endblock %}
+{% block titulo %}
+REGISTRO
+{% endblock titulo %}
 {% block contenido %}
 
-<main role="main">
-  <div class="container">
-    <div class="row mt-3">
-      <div class="col-md-9 mx-auto mb-5">
-        <form action="" method="post">{% csrf_token %}
-         <h3 class="mb-4">Registro</h3>
-          {{form.as_p}}
-          <p><input type="submit" class="btn btn-primary btn-block" value="Confirmar"></p>
-        </form>
+<main class="main-container-signup" role="main">
+  <div class="container container-signup">
+    <div class="row mt-3 sg-3">
+      <div class="col-md-9 mx-auto mb-5 col-sg-3">
+        <div class="main-container-login">
+          <div class="container-title-login">
+            <div class="about-us-four-border section-title mb-0 title-login">
+              <h4 class="m-0 text-uppercase font-weight-bold">Registrarse</h4>
+            </div>
+          </div>
+          <form class="form-input-login" method="POST">{%csrf_token%}
+            <div class="errors">
+              {{form.errors}}
+            </div>
+            <div class="container-input-login">
+              <div class="input-group mb-2" style="width: 100%;">
+                <input required type="text" name="first_name" class="form-control form-control-lg" placeholder="Nombre">
+
+              </div>
+              <div class="input-group mb-2" style="width: 100%;">
+                <input required type="text" name="last_name" class="form-control form-control-lg"
+                  placeholder="Apellido">
+
+              </div>
+              <div class="input-group mb-2" style="width: 100%;">
+                <input required type="text" name="username" class="form-control form-control-lg"
+                  placeholder="Nombre de usuario">
+
+              </div>
+              <div class="input-group mb-2" style="width: 100%;">
+                <input required type="email" name="email" class="form-control form-control-lg"
+                  placeholder="Correo eléctronico">
+
+              </div>
+              <div class="input-group mb-2" style="width: 100%;">
+                <input required type="password" name="password1" class="form-control form-control-lg"
+                  placeholder="Contraseña">
+
+              </div>
+              <div class="input-group mb-2" style="width: 100%;">
+                <input required type="password" name="password2" class="form-control form-control-lg"
+                  placeholder="Repetir contraseña">
+
+              </div>
+              <div class="container-buttons-login">
+                <div class="input-group-append">
+                  <button class="btn btn-primary font-weight-bold px-3">CONFIRMAR</button>
+                </div>
+                <div class="input-group-append">
+                  <a href="{% url 'login' %}" class="btn btn-secondary font-weight-bold px-3">INICIAR
+                    SESIÓN</a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>

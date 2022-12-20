@@ -1,11 +1,37 @@
 {% extends 'base.html' %}
-
+{% block titulo %}
+INGRESAR
+{% endblock titulo %}
 {% block contenido %}
-			<form method="POST">{%csrf_token%}
-				{{form.errors}}
-				<input type="text" name="username" placeholder="USUARIO">
-				<input type="password" name="password" placeholder="PASSWORD">
+<div class="main-container-login">
+	<div class="container-title-login">
+		<div class="about-us-four-border section-title mb-0 title-login">
+			<h4 class="m-0 text-uppercase font-weight-bold">Iniciar sesión</h4>
+		</div>
+	</div>
+	<form class="form-input-login" method="POST">{%csrf_token%}
+		<div class="errors">
+			{{form.errors}}
+		</div>
+		<div class="container-input-login">
+			<div class="input-group mb-2" style="width: 100%;">
+				<input type="text" name="username" class="form-control form-control-lg" placeholder="Usuario">
+			</div>
+			<div class="input-group mb-2" style="width: 100%;">
+				<input type="password" name="password" class="form-control form-control-lg" placeholder="Contraseña">
 
-				<input type="submit" name="" value="ENVIAR">
-			</form>
+			</div>
+
+			<div class="container-buttons-login">
+				<div class="input-group-append">
+					<input type="submit" class="btn btn-primary font-weight-bold px-3" value="INGRESAR" />
+				</div>
+				<div class="input-group-append">
+					<a href="{% url 'usuarios:registro' %}"
+						class="btn btn-secondary font-weight-bold px-3">REGISTRARSE</a>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
 {% endblock %}
