@@ -119,6 +119,13 @@ p {
 	margin: 0;
 }
 
+.text-edition{
+	overflow: hidden;
+	display: -webkit-box !important;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+}
+
 .text-title-style{
 	overflow: hidden;
 	display: -webkit-box !important;
