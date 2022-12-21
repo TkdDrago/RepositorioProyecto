@@ -88,9 +88,6 @@
 					<div class="bg-white border border-top-0 p-4">
 						{% for com in comentarios %}
 						<div class="media mb-4 column">
-							{% if user == com.usuario %}
-							<a href="">Eliminar comentario</a>
-							{% endif %}
 							<div class="media-body">
 								<h6><a class="text-secondary font-weight-bold" href="">J{{com.usuario}}</a>
 									<small><i>{{com.fecha}}</i></small>
